@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-purple-800 rounded shadow-lg min-w-full">
-    test
+  <div class="h-[400px] min-w-[650px] bg-indigo-400 rounded text-white flex justify-center items-center font-bold text-2xl">
+    Test
   </div>
 </template>
