@@ -1,5 +1,5 @@
 <template>
-  <button class="bg-purple-400 bg-opacity-50 hover:bg-purple-800 font-bold py-2 px-4 shadow-lg "
+  <button class="bg-purple-400 bg-opacity-50 hover:bg-purple-800 font-bold py-2 sm:px-2 shadow-lg "
           :class="[{ 'cursor-not-allowed': disabled }, roundedClass]"
           :disabled="disabled"
           @click="displayQuestion"
@@ -13,11 +13,11 @@ export default {
   name: 'ActionBtn',
   props: {
     disabled: Boolean,
-    roundedClass: String
+    roundedClass: String,
   },
 
   methods: {
-    displayQuestion() {
+    displayQuestion () {
       this.$emit('displayQuestion')
     },
   },

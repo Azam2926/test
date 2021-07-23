@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen min-w-max bg-indigo-600">
+  <div class="min-h-screen bg-indigo-600">
     <Navbar/>
-    <div class="h-screen mt-[80px]">
+    <div class="mt-[2.5rem] sm:mt-[4rem] md:mt-[5rem]">
       <router-view/>
     </div>
   </div>
@@ -12,6 +12,6 @@ import Navbar from './Navbar.vue'
 
 export default {
   name: 'Main',
-  components: {Navbar},
+  components: { Navbar }
 }
 </script>

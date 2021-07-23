@@ -1,5 +1,5 @@
 <template>
-    <Test/>
+  <Test/>
 </template>
 <script>
 import Test from '../components/Test.vue'
