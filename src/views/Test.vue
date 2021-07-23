@@ -1,5 +1,10 @@
 <template>
-  <div class="h-[400px] w-[650px] bg-indigo-400 rounded text-white flex justify-center items-center font-bold text-2xl">
-    Test
-  </div>
+    <Test/>
 </template>
+<script>
+import Test from '../components/Test.vue'
+
+export default {
+  components: { Test },
+}
+</script>
