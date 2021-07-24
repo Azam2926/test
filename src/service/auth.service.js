@@ -1,14 +1,15 @@
-import axios from "axios";
 import router from "../router";
 import httpClient from "./http.service";
 
 const authService = {
 
     user: null,
+    isLoggedIn() {
+        return !!localStorage.getItem('access_token')
+    },
     async login(formData) {
         try {
             const {status, data} = await httpClient.post('user/login', formData)
-            console.log(status, data)
             if (status === 200) {
                 this.setUser(data)
                 return {success: true}
@@ -23,7 +24,6 @@ const authService = {
     async register(formData) {
         try {
             const {status, data} = await httpClient.post('user/register', formData)
-            console.log(status, data)
             if (status === 200) {
                 this.setUser(data)
                 return {success: true}
@@ -37,19 +37,19 @@ const authService = {
     },
 
     logout: () => {
-        localStorage.removeItem('ACCESS_TOKEN')
+        localStorage.removeItem('access_token')
         router.push({name: 'login'})
     },
 
 
     setUser(user) {
         this.user = user
-        localStorage.setItem('ACCESS_TOKEN', this.user.access_token)
+        localStorage.setItem('access_token', this.user.access_token)
     },
 
-    isGuest: () => !localStorage.getItem('ACCESS_TOKEN'),
+    isGuest: () => !localStorage.getItem('access_token'),
 
-    getToken: () => localStorage.getItem('ACCESS_TOKEN'),
+    getToken: () => localStorage.getItem('access_token'),
 
 
     async getUser() {

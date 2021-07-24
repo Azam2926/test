@@ -1,11 +1,11 @@
 <template>
-  <div class=" min-width-[300px] font-sans flex justify-center items-center text-white py-4 sm:px-4 md:px-4">
+  <div class="min-width-[300px] font-sans flex justify-center items-center  text-white py-4 sm:px-4 md:px-4">
     <ActionBtn :disabled="disabledPrev" @displayQuestion="currentIndex--" roundedClass="rounded-l">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
     </ActionBtn>
-    <div class="flex flex-col bg-purple-800 bg-opacity-50 shadow-lg !w-[1050px] h-auto">
+    <div class="flex flex-col bg-purple-800 bg-opacity-50 shadow-lg rounded  !w-[1050px] h-auto">
       <Question :question="currentQuestion"/>
       <Answers :answers="currentQuestion.questionAnswers" @takeAnswer="takeAnswers"/>
       <button

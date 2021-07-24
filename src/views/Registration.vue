@@ -2,7 +2,7 @@
     <div class="form-wrapper">
         <h3>Register and create notes</h3>
         <form @submit.prevent="register" action="">
-            <span v-if="loading" class="loader"><loader /></span>
+            <span v-if="loading" class="loader">loading ..</span>
             <div v-else-if="errors" class="errors">
                 <p v-for="(error, field) in errors" :key="field">
                     {{error[0]}}
@@ -22,13 +22,9 @@
 
 <script>
     import authService from "../service/auth.service";
-    import {Jumper as Loader} from 'vue-loading-spinner'
 
     export default {
         name: "Registration",
-        components: {
-            Loader
-        },
         data() {
             return {
                 form: {

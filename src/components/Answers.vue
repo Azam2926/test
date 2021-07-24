@@ -25,8 +25,7 @@ export default {
   methods: {
     takeAnswer(answer) {
       const answers = this.answers.map((item) => {
-        if (item.id === answer.id) item.isSelected = true;
-        else item.isSelected = false;
+        item.isSelected = item.id === answer.id;
 
         return item;
       });

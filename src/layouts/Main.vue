@@ -1,17 +1,24 @@
 <template>
-  <div class="min-h-screen bg-indigo-600">
-    <Navbar/>
-    <div class="mt-[2.5rem] sm:mt-[4rem] md:mt-[5rem]">
+    <Navbar :user="user"/>
+    <main class=" pt-[2.5rem] sm:pt-[4rem] md:pt-[5rem] min-h-screen bg-gradient-to-r from-[#21d1ee] to-[#0ea6e9]">
       <router-view/>
-    </div>
-  </div>
+    </main>
 </template>
 
 <script>
 import Navbar from './Navbar.vue'
+import authService from "../service/auth.service";
 
 export default {
   name: 'Main',
-  components: { Navbar }
+  components: { Navbar },
+  data(){
+    return {
+      user: {}
+    }
+  },
+  async mounted() {
+    this.user = await authService.getUser()
+  }
 }
 </script>
