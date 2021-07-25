@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper shadow-lg">
-    <h3>Login</h3>
+    <h3 class="mb-4">Login</h3>
     <form @submit.prevent="login" action="">
       <span v-if="loading" class="loader">loading</span>
       <div v-else-if="errors" class="errors">
@@ -15,7 +15,7 @@
           <span v-if="loading">Loading ...</span>
           <span v-else>Login</span>
         </button>
-        <router-link to="/register" class="link hover:text-blue-500">Click here to register</router-link>
+        <router-link to="/register" class="link hover:text-blue-500 text-md">Click here to register</router-link>
       </div>
     </form>
   </div>

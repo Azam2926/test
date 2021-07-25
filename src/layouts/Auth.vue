@@ -1,10 +1,10 @@
 <template>
-  <div class="bg-blue-500 min-h-screen flex justify-center items-center">
+  <div class="bg-blue-500 min-h-screen flex justify-center items-center text-md">
     <router-view/>
   </div>
 </template>
 
-<style>
+<style >
 #auth-layout {
   padding: 50px;
 
@@ -35,9 +35,9 @@ input {
   display: block;
   width: 100%;
   border: 2px solid #e6e6e6;
-  padding: 6px 12px;
+  padding: 6px 12px !important;
   transition: all 0.3s;
-
+  border-radius: 0.25rem;
 }
 
 input:focus {
@@ -70,7 +70,7 @@ input:focus {
   padding: 10px 15px;
   color: #fff;
   background-color: #ff6969;
-  font-size: 12px;
+  font-size: 16px;
 
 }
 

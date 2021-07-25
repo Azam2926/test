@@ -29,7 +29,7 @@ export default {
 
         return item;
       });
-      this.$emit("takeAnswer", answers);
+      this.$emit("takeAnswer", answers, answer);
     },
   },
 };

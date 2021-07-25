@@ -1,27 +1,30 @@
 <template>
-  <div class="min-width-[300px] font-sans flex justify-center items-center  text-white py-4 sm:px-4 md:px-4">
-    <ActionBtn :disabled="disabledPrev" @displayQuestion="currentIndex--" roundedClass="rounded-l">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-      </svg>
-    </ActionBtn>
+
+  <div class="min-width-[300px] font-sans flex justify-center items-center  text-white pt-4 sm:px-4 md:px-4">
+    <action-btn :disabled="disabledPrev" @displayQuestion="currentIndex--" roundedClass="rounded-l">
+      <app-svg d="M15 19l-7-7 7-7"/>
+    </action-btn>
+
     <div class="flex flex-col bg-purple-800 bg-opacity-50 shadow-lg rounded  !w-[1050px] h-auto">
       <Question :question="currentQuestion"/>
       <Answers :answers="currentQuestion.questionAnswers" @takeAnswer="takeAnswers"/>
-      <button
-          class="bg-purple-400 bg-opacity-50 hover:bg-purple-800 font-bold py-4 px-4 shadow-lg rounded-b"
-          :class="{ hidden: hiddenSubmit }"
-          @click="submitAnswers"
-      >
-        Submit
-      </button>
     </div>
-    <ActionBtn :disabled="disabledNext" @displayQuestion="currentIndex++" roundedClass="rounded-r">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-      </svg>
-    </ActionBtn>
+
+    <action-btn :disabled="disabledNext" @displayQuestion="currentIndex++" roundedClass="rounded-r">
+      <app-svg d="M9 5l7 7-7 7"/>
+    </action-btn>
   </div>
+  <div class="flex">
+    <button
+        class="bg-gray-800 hover:bg-opacity-50 mx-auto w-1/6 text-gray-200 hover:bg-gray-700 z-50 font-bold py-4 px-4 shadow-lg rounded-b"
+        :class="{ hidden: hiddenSubmit }"
+        @click="submitAnswers"
+    >
+      Submit
+    </button>
+  </div>
+  <p class="text-center mt-4 text-gray-800 text-2xl">{{ footer }}</p>
+
 </template>
 
 <script>
@@ -29,11 +32,12 @@ import testService from '../service/test.service'
 import Question from './Question.vue'
 import Answers from './Answers.vue'
 import ActionBtn from './ActionBtn.vue'
+import AppSvg from "./AppSvg.vue";
 
 export default {
   name: 'Test',
-  components: { Question, ActionBtn, Answers },
-  data () {
+  components: {AppSvg, Question, ActionBtn, Answers},
+  data() {
     return {
       questions: [],
       currentIndex: 0,
@@ -41,7 +45,7 @@ export default {
       results: '',
     }
   },
-  async created () {
+  async created() {
     try {
       const res = await testService.get()
       this.questions = res.data
@@ -50,7 +54,7 @@ export default {
     }
   },
   methods: {
-    async submitAnswers () {
+    async submitAnswers() {
       try {
         const res = await testService.submitAnswers(this.answers)
         this.results = res.data
@@ -59,23 +63,39 @@ export default {
         console.log(e)
       }
     },
-    takeAnswers (answers) {
+    takeAnswers(answers, selectedAnswer) {
       this.questions[this.currentIndex].questionAnswers = answers
+
+      const answeredQuestionIndex = this.answers.findIndex(obj => obj.question_id === this.currentQuestion.id)
+
+      if (answeredQuestionIndex !== -1)
+        this.answers[answeredQuestionIndex].answer_id = selectedAnswer.id
+      else
+        this.answers.push({
+          question_id: this.currentQuestion.id,
+          answer_id: selectedAnswer.id,
+        })
     },
   },
   computed: {
-    currentQuestion () {
+    currentQuestion() {
       return this.questions[this.currentIndex] ?? testService.loadingQuestion
     },
-    disabledPrev () {
+    disabledPrev() {
       return this.currentIndex === 0
     },
-    disabledNext () {
-      return this.currentIndex === this.questions.length - 1
+    disabledNext() {
+      return this.currentIndex === this.question_length - 1
     },
-    hiddenSubmit () {
-      return this.currentIndex !== this.questions.length - 1
+    hiddenSubmit() {
+      return this.currentIndex !== this.question_length - 1
     },
+    question_length() {
+      return this.questions.length
+    },
+    footer() {
+      return this.currentIndex + 1 + '/' + (this.question_length)
+    }
   },
 }
 </script>

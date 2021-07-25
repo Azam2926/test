@@ -1,5 +1,5 @@
 <template>
-  <button class="bg-purple-400 bg-opacity-50 hover:bg-purple-800 font-bold py-2 sm:px-2 shadow-lg "
+  <button class="bg-gray-800 hover:bg-opacity-50 hover:bg-gray-700 font-bold py-2 sm:px-2 shadow-lg "
           :class="[{ 'cursor-not-allowed': disabled }, roundedClass]"
           :disabled="disabled"
           @click="displayQuestion"
