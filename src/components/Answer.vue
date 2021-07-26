@@ -1,11 +1,9 @@
 <template>
   <div
-      class="w-full min-h-[6rem] h-auto
+      class="min-h-[6rem] h-auto
       bg-gradient-to-r hover:from-green-300 hover:to-green-400
       flex items-center
-      font-bold text-xl lg:text-2xl text-white
       shadow-lg rounded
-      cursor-pointer
       p-2"
       @click="takeAnswer"
       :class="{'from-green-400 to-green-300 hover:from-green-300 hover:to-green-400':answer.isSelected}"
@@ -25,7 +23,7 @@ export default {
   },
 
   methods: {
-    takeAnswer () {
+    takeAnswer() {
       this.$emit('takeAnswer', this.answer)
     },
   },

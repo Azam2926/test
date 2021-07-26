@@ -1,8 +1,12 @@
 <template>
-    <Navbar :user="user"/>
-    <main class=" pt-[2.5rem] sm:pt-[4rem] md:pt-[5rem] min-h-screen bg-gradient-to-r from-[#21d1ee] to-[#0ea6e9]">
-      <router-view/>
-    </main>
+  <Navbar :user="user"/>
+  <main
+      class="mt-[2.5rem] sm:mt-[4rem] md:mt-[5rem]
+      bg-gradient-to-r from-[#21d1ee] to-[#0ea6e9]
+      min-h-[calc(100vh-2.5rem)] sm:min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)]"
+  >
+    <router-view/>
+  </main>
 </template>
 
 <script>
@@ -11,8 +15,8 @@ import authService from "../service/auth.service";
 
 export default {
   name: 'Main',
-  components: { Navbar },
-  data(){
+  components: {Navbar},
+  data() {
     return {
       user: {}
     }

@@ -1,29 +1,35 @@
 <template>
 
-  <div class="min-width-[300px] font-sans flex justify-center items-center  text-white pt-4 sm:px-4 md:px-4">
-    <action-btn :disabled="disabledPrev" @displayQuestion="currentIndex--" roundedClass="rounded-l">
-      <app-svg d="M15 19l-7-7 7-7"/>
-    </action-btn>
+  <div v-if="result.show" class="min-h-[inherit] font-sans text-white py-4 sm:px-4 md:px-4 font-bold text-2xl flex justify-center items-center">
+    {{ result.score }} from {{ question_length }} questions
+  </div>
 
-    <div class="flex flex-col bg-purple-800 bg-opacity-50 shadow-lg rounded  !w-[1050px] h-auto">
-      <Question :question="currentQuestion"/>
-      <Answers :answers="currentQuestion.questionAnswers" @takeAnswer="takeAnswers"/>
+  <div v-else>
+    <div class="font-sans flex justify-center items-center text-white pt-10 sm:px-4 md:px-4">
+      <action-btn :disabled="disabledPrev" @displayQuestion="currentIndex--" roundedClass="rounded-l">
+        <app-svg d="M15 19l-7-7 7-7"/>
+      </action-btn>
+
+      <div class="flex flex-col bg-purple-800 bg-opacity-50 shadow-lg rounded !w-[1050px] h-auto">
+        <Question :question="currentQuestion"/>
+        <Answers :answers="currentQuestion.questionAnswers" @takeAnswer="takeAnswers"/>
+      </div>
+
+      <action-btn :disabled="disabledNext" @displayQuestion="currentIndex++" roundedClass="rounded-r">
+        <app-svg d="M9 5l7 7-7 7"/>
+      </action-btn>
     </div>
-
-    <action-btn :disabled="disabledNext" @displayQuestion="currentIndex++" roundedClass="rounded-r">
-      <app-svg d="M9 5l7 7-7 7"/>
-    </action-btn>
+    <div class="flex">
+      <button
+          class="bg-gray-800 hover:bg-opacity-50 mx-auto w-1/6 text-gray-200 hover:bg-gray-700 z-50 font-bold py-4 px-4 shadow-lg rounded-b"
+          :class="{ hidden: hiddenSubmit }"
+          @click="submitAnswers"
+      >
+        Submit
+      </button>
+    </div>
+    <p class="text-center mt-4 text-gray-800 text-2xl">{{ footer }}</p>
   </div>
-  <div class="flex">
-    <button
-        class="bg-gray-800 hover:bg-opacity-50 mx-auto w-1/6 text-gray-200 hover:bg-gray-700 z-50 font-bold py-4 px-4 shadow-lg rounded-b"
-        :class="{ hidden: hiddenSubmit }"
-        @click="submitAnswers"
-    >
-      Submit
-    </button>
-  </div>
-  <p class="text-center mt-4 text-gray-800 text-2xl">{{ footer }}</p>
 
 </template>
 
@@ -41,8 +47,12 @@ export default {
     return {
       questions: [],
       currentIndex: 0,
+      reachedEnd: false,
       answers: [],
-      results: '',
+      result: {
+        score: 'Loading...',
+        show: false
+      },
     }
   },
   async created() {
@@ -57,8 +67,10 @@ export default {
     async submitAnswers() {
       try {
         const res = await testService.submitAnswers(this.answers)
-        this.results = res.data
-        // this.hiddenSubmit = true
+        this.result = {
+          score: res.data.score,
+          show: true
+        }
       } catch (e) {
         console.log(e)
       }
@@ -88,13 +100,21 @@ export default {
       return this.currentIndex === this.question_length - 1
     },
     hiddenSubmit() {
-      return this.currentIndex !== this.question_length - 1
+      if (this.reachedEnd)
+        return false;
+
+      if (this.currentIndex !== this.question_length - 1)
+        return true
+
+      this.reachedEnd = true;
+
+      return false
     },
     question_length() {
       return this.questions.length
     },
     footer() {
-      return this.currentIndex + 1 + '/' + (this.question_length)
+      return (this.currentIndex + 1) + '/' + (this.question_length)
     }
   },
 }

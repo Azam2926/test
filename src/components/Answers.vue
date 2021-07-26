@@ -1,10 +1,10 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-4 text-xl lg:text-2xl text-white font-bold cursor-pointer">
     <Answer
-      v-for="answer in answers"
-      :key="answer.id"
-      @takeAnswer="takeAnswer"
-      :answer="answer"
+        v-for="answer in answers"
+        :key="answer.id"
+        @takeAnswer="takeAnswer"
+        :answer="answer"
     />
   </div>
 </template>
@@ -14,7 +14,7 @@ import Answer from "./Answer.vue";
 
 export default {
   name: "Answers",
-  components: { Answer },
+  components: {Answer},
   props: {
     answers: {
       type: Object,
